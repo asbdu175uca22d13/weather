@@ -31,7 +31,7 @@ function updateLocalClock() {
 setInterval(updateLocalClock, 1000);
 updateLocalClock();
 
-// Update city clock every second using cityTimezoneOffset (seconds)
+
 function updateCityClock(){
   if (cityTimezoneOffset === null) {
     cityClockEl.textContent = "--:--:--";
@@ -48,7 +48,7 @@ function updateCityClock(){
 setInterval(updateCityClock, 1000);
 updateCityClock();
 
-// Fetch weather for a city name
+
 async function fetchWeatherForCity(city) {
   try {
     if (!OWM_API_KEY || OWM_API_KEY === "YOUR_OPENWEATHERMAP_API_KEY") {
@@ -63,10 +63,10 @@ async function fetchWeatherForCity(city) {
       else throw new Error(`Weather API error ${resp.status}`);
     }
     const data = await resp.json();
-    // timezone is seconds offset from UTC
+    
     cityTimezoneOffset = data.timezone;
 
-    // Update weather UI
+    
     const temp = Math.round(data.main.temp);
     const desc = data.weather && data.weather[0] ? data.weather[0].description : "";
     const iconCode = data.weather && data.weather[0] ? data.weather[0].icon : null;
@@ -79,7 +79,7 @@ async function fetchWeatherForCity(city) {
     locationNameEl.textContent = `${data.name}${data.sys && data.sys.country ? ", " + data.sys.country : ""}`;
 
     if (iconCode) {
-      // Use OpenWeatherMap icon. For production consider using your own assets.
+
       weatherIcon.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
       weatherIcon.alt = desc;
       weatherIcon.style.display = "";
@@ -95,7 +95,7 @@ async function fetchWeatherForCity(city) {
   }
 }
 
-// Attach controls
+
 searchBtn.addEventListener("click", () => {
   const city = cityInput.value.trim();
   if (!city) {
@@ -105,19 +105,17 @@ searchBtn.addEventListener("click", () => {
   fetchWeatherForCity(city);
 });
 
-// Press enter to search
 cityInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") searchBtn.click();
 });
 
-// Detect approximate city from Intl API / browser locale (best-effort)
-// Note: This is just a convenience — we then call OWM by city name.
+
 detectBtn.addEventListener("click", () => {
   const locale = navigator.language || "en-US";
-  // Can't reliably map locale -> city, so prompt user with a sensible fallback:
+  
   const guess = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
   if (guess) {
-    // guess is IANA timezone like 'Asia/Kolkata', use the region part as a hint
+    
     const parts = guess.split("/");
     const cityGuess = parts.length > 1 ? parts[1].replace("_", " ") : parts[0];
     if (confirm(`Detected timezone ${guess}. Search weather for "${cityGuess}"?`)) {
@@ -133,5 +131,5 @@ detectBtn.addEventListener("click", () => {
   }
 });
 
-// Optionally auto-search a default city on load
+
 fetchWeatherForCity("London");
