@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Weather Clock</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Weather Clock</h1>
+      <p class="subtitle">Shows both local time and live weather for any city</p>
+    </header>
+
+    <section class="controls">
+      <input id="cityInput" type="text" placeholder="Enter city (e.g., Tokyo or London,UK)" />
+      <button id="searchBtn">Search</button>
+      <button id="detectBtn" title="Detect city by browser locale">Detect / Use My Timezone</button>
+    </section>
+
+    <section class="clocks">
+      <div class="card">
+        <h2>Your Local Time</h2>
+        <div id="localClock" class="clock large"></div>
+        <div id="localDate" class="muted">loading date...</div>
+      </div>
+
+      <div class="card">
+        <h2>City Time & Weather</h2>
+        <div id="cityClock" class="clock large"></div>
+        <div id="cityDate" class="muted"></div>
+
+        <div id="weather" class="weather">
+          <div class="weather-left">
+            <img id="weatherIcon" alt="weather icon" src="./7133364.png" />
+            <div id="temp" class="temp">--°C</div>
+          </div>
+          <div class="weather-right">
+            <div id="description" class="muted">—</div>
+            <div id="details" class="muted">Humidity: — | Wind: —</div>
+            <div id="locationName" class="muted">—</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot muted">
+      Powered by OpenWeatherMap • Times update every second, weather updates every 60s.
+    </footer>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>
